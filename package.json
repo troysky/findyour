@@ -10,6 +10,8 @@
     "mail-listener2": "~0.1.3",
     "mandrill-api": "~1.0.40",
     "jsdom": "~0.11.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "q": "~1.0.1",
+    "request": "~2.36.0"
   }
 }
