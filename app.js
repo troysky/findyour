@@ -7,6 +7,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var mailListener = require('./MailListener');
+var newrelic = require('newrelic');
 
 var app = express();
 

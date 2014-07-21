@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "findyour",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "jquery": "~2.1.1",
     "q": "~1.0.1",
     "request": "~2.36.0",
-    "mongojs": "~0.13.0"
+    "mongojs": "~0.13.0",
+    "newrelic": "~1.8.1"
   }
 }
