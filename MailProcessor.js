@@ -78,19 +78,19 @@ exports.extractDetails = function(html){
 	}).parentWindow;
 	jsdom.jQueryify(window, jquery, function () {
 		try{
-			/*var companyName = window.$('tr:has(td:contains("Company Name"))').next().find('td').text().trim();
+			var companyName = window.$('tr:has(td:contains("Company Name"))').next().find('td').text().trim();
 			var details = {				
 				_id: companyName,
 				companyName: companyName,
 				category: window.$('tr:has(td:contains("Category"))').next().find('td').text().trim(),
 				email: window.$('tr:has(td:contains("Email"))').next().find('td').text().trim().substring(0,4)
-			}*/
-			var details = {				
+			}
+			/*var details = {				
 				_id: "Test Trader",
 				companyName: "Test Trader",
 				category: "Transfer Funds",
 				email: "support@findyour.com.au"
-			}
+			}*/
 			deferred.resolve(details);
 		}catch(e){
 			deferred.reject("failed to parse contents: " + e);
