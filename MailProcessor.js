@@ -50,7 +50,6 @@ exports.extractCriteria = function(html){
 	}).parentWindow;
 	jsdom.jQueryify(window, jquery, function () {
 		try{
-			debugger;
 			var criteria = {
 				customerRequest: html,
 				category: window.$('tr:has(td:contains("Category"))').eq(1).next().find('td').text().trim(),
@@ -82,8 +81,8 @@ exports.extractDetails = function(html){
 			var details = {				
 				_id: companyName,
 				companyName: companyName,
-				category: window.$('tr:has(td:contains("Category"))').next().find('td').text().trim(),
-				email: window.$('tr:has(td:contains("Email"))').next().find('td').text().trim()
+				category: window.$('tr:has(td:contains("Category"))').eq(1).next().find('td').text().trim(),
+				email: window.$('tr:has(td:contains("Email"))').eq(1).next().find('td').text().trim()
 			}
 			/*var details = {				
 				_id: "Test Trader",
