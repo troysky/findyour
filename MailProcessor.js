@@ -83,7 +83,7 @@ exports.extractDetails = function(html){
 				_id: companyName,
 				companyName: companyName,
 				category: window.$('tr:has(td:contains("Category"))').next().find('td').text().trim(),
-				email: window.$('tr:has(td:contains("Email"))').next().find('td').text().trim().substring(0,4)
+				email: window.$('tr:has(td:contains("Email"))').next().find('td').text().trim()
 			}
 			/*var details = {				
 				_id: "Test Trader",
