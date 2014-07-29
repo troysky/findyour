@@ -34,6 +34,16 @@ http.createServer(app).listen(app.get('port'), function(){
 
 app.get('/', function(req,res){ res.sendfile(__dirname + '/public/index.html'); });
 
+app.post('/submit_profile', function(req,res){ 
+	console.log(request.body.pro_name);
+    console.log(request.body.pro_email);
+    console.log(request.body.pro_category);
+    console.log(request.body.cust_email);    
+    res.sendfile(__dirname + '/public/index.html');
+});
+
+
+
 mailListener.start();
 
 
