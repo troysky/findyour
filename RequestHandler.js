@@ -1,5 +1,6 @@
 var mustache = require("mustache");
 var dbm = require('./MongoDBManager');
+var constants = require('./Constants');
 
 exports.init = function(app){	
 
