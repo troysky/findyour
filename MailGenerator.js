@@ -7,7 +7,7 @@ exports.getHtml = function(details, pro){
 	console.log("template: " + template);
 
 	var config = {
-		customerEmail: details.customerEmail,
+		jobId: details.id,
 		customerRequest: details.customerRequest,
 		pro: pro
 	};

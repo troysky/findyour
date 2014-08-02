@@ -10,13 +10,7 @@
 	<div>{{{ customerRequest }}}</div>
 	<br />
 	<div class="button">
-		<form id="actionform" method="post" action="http://findyour.herokuapp.com/submit_profile">
-			<input type="hidden" name="pro_name" value="{{pro.companyName}}" />
-			<input type="hidden" name="pro_email" value="{{pro.email}}" />
-			<input type="hidden" name="pro_category" value="{{pro.category}}" />
-			<input type="hidden" name="cust_email" value="{{customerEmail}}" />			
-			<button type="submit" form="actionform" formtarget="_blank">Submit my profile</button>
-		</form>
+		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{jobId}}" target="_blank" style="text-decoration:none"><button>Submit my profile</button></a>
 	</div>
 	
 </body>

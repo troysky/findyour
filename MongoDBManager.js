@@ -30,14 +30,34 @@ exports.find = function(col, criteria, returnObj){
 	return deferred.promise;
 }
 
-exports.save = function(col, obj){
+exports.save = function(col, obj, returnObj){
 	var deferred = q.defer();
 	var col = db.collection(col);
 	col.save(obj, function(err, doc, lastErrorObject) { 
 		if (err) {
 			deferred.reject(new Error("Error: ", err));
 		}
-		deferred.resolve(doc);
+		if (returnObj){
+			deferred.resolve(returnObj);
+		}else{
+			deferred.resolve(doc);
+		}
+	});
+	return deferred.promise;
+}
+
+exports.insert = function(col, obj, returnObj){
+	var deferred = q.defer();
+	var col = db.collection(col);
+	col.insert(obj, function(err, doc, lastErrorObject) { 
+		if (err) {
+			deferred.reject(new Error("Error: ", err));
+		}
+		if (returnObj){
+			deferred.resolve(returnObj);
+		}else{
+			deferred.resolve(doc);
+		}
 	});
 	return deferred.promise;
 }

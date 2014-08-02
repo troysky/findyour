@@ -1,7 +1,7 @@
 var jsdom = require('jsdom').jsdom;
 var jquery = require('jquery');
 var request = require('request');
-var dbm = require('./dbManager');
+var dbm = require('./MongoDBManager');
 var mg = require('./MailGenerator');
 var ms = require('./MailSender');
 var constants = require('./Constants');
@@ -24,8 +24,10 @@ exports.process = function(mail){
 exports.processNewJob = function(mail){
 	console.log("start processing new job: " + mail.subject);
 	this.extractCriteria(mail.html)
+	.then(this.createId, this.handleError)
 	.then(this.findNearByPostCodes, this.handleError)
 	.then(this.findPros, this.handleError)
+	.then(this.saveJobs, this.handleError)
 	.then(this.distribute.bind(this), this.handleError);
 }
 
@@ -50,6 +52,7 @@ exports.extractCriteria = function(html){
 		try{
 			var criteria = {
 				customerRequest: html,
+				customerName: self.grepValue(window, "Name"),
 				customerEmail: self.grepValue(window, "Email"),
 				category: self.grepValue(window, "Category"),
 				postCode: self.grepValue(window, "Post Code").substring(0,4)
@@ -61,6 +64,13 @@ exports.extractCriteria = function(html){
 	});	
 
 	return deferred.promise;
+}
+
+exports.createId = function(criteria){
+	var timeInMillis = (new Date()).getTime();
+	console.log("assinging id", timeInMillis);
+	criteria.id = timeInMillis;
+	return criteria;
 }
 
 exports.extractDetails = function(html){
@@ -128,6 +138,24 @@ exports.findNearByPostCodes = function(criteria){
 exports.findPros = function(criteria){
 	console.log("searching pros for ", criteria.category);	
 	return dbm.find(constants.PROS_COL, {category: criteria.category}, criteria);
+}
+
+exports.saveJobs = function(criteria){
+	console.log("saving jobs");	
+	var jobs = [];
+	for(var i = criteria.results.length -1; i >= 0; i--){
+		var pro = criteria.results[i];
+		var job = {
+			_id: criteria.id,
+			category: criteria.category,
+			customerName: criteria.customerName,
+			customerEmail: criteria.customerEmail,			
+			pro: pro
+		}
+		jobs.push(job);
+	}
+	
+	return dbm.insert(constants.JOBS_COL, jobs, criteria);
 }
 
 exports.handleError = function(reason){
