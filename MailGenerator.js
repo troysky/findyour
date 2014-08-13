@@ -1,11 +1,13 @@
 var mustache = require("mustache");
 var fs = require('fs');
 
-exports.getHtml = function(details, pro){
+exports.getJobNotificationToPro = function(details, pro){
+	/*
 	var category = details.category.replace(" ", "").toLowerCase();
 	var template = 'templates/' + category + "_jobpost.html";
 	console.log("template: " + template);
-
+	*/
+	var template = "templates/job_notif_to_pro.html"
 	var config = {
 		jobId: details.id,
 		customerRequest: details.customerRequest,
@@ -17,9 +19,33 @@ exports.getHtml = function(details, pro){
 	return html;
 }
 
-exports.generate = function(from, subject, to, details, pro){		
+exports.getQuoteToCustomer = function(job){
+	var template = "templates/quote_to_customer.html"
+	var fileContents = fs.readFileSync(template).toString();
+	var html = mustache.render(fileContents, job);
+	console.log("mail contents: " + html);
+	return html;
+}
+
+exports.getWinToPro = function(job){
+	var template = "templates/win_to_pro.html"
+	var fileContents = fs.readFileSync(template).toString();
+	var html = mustache.render(fileContents, job);
+	console.log("mail contents: " + html);
+	return html;
+}
+
+exports.getWinToCustomer = function(job){
+	var template = "templates/win_to_customer.html"
+	var fileContents = fs.readFileSync(template).toString();
+	var html = mustache.render(fileContents, job);
+	console.log("mail contents: " + html);
+	return html;
+}
+
+exports.generate = function(from, subject, to, html){		
 	return {
-	    "html": this.getHtml(details, pro),
+	    "html": html,
 	    //"text": "Example text content",
 	    "subject": subject,
 	    "from_email": from,
@@ -29,8 +55,8 @@ exports.generate = function(from, subject, to, details, pro){
 	            //"name": "Recipient Name",
 	            "type": "to"
 	        }],
-        "bcc_address": "support@findyour.com.au"
-	    /*"headers": {
+        /*"bcc_address": "support@findyour.com.au"
+	    "headers": {
 	        "Reply-To": "message.reply@example.com"
 	    },
 	    "important": false,

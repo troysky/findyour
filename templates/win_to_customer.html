@@ -1,0 +1,25 @@
+<<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p>Hi {{customerName}},<p/>
+	<p>Congratulations you have found your professional for the following job {{_id}}:</p>
+
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+	
+	<p>Please see the Professionals details below:</p>
+	<p>Company Name: {{pro.companyName}}<br/>
+	Email: {{pro.email}}</p>
+
+	<p><a href="http://findyour.com.au/{{pro.profile}}">View this Professional’s profile</a></p>	
+
+	<p>
+		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au<br />
+		Thanks for using Findyour,<br />
+		Kind Regards,<br />
+		The findyour Team<br />
+		<a href="www.findyour.com.au">www.findyour.com.au</a>
+	</p>
+</body>
+</html>

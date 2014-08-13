@@ -1,0 +1,28 @@
+<<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p>Hi {{pro.companyName}},<p/>
+	<p>There has been a new job that matches your criteria.<br />
+	Please confirm if you would like to be put forward for this job (and supply your rate / quote – if applicable).</p>	
+	
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+
+	<div class="button">
+		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{jobId}}" target="_blank" style="text-decoration:none"><button>Submit my profile</button></a>
+	</div>
+	<p>Next Steps <br />
+	-	Customer will review the Professionals and choose one<br />
+	-	The successful Professional will have the details of the customer sent to them
+	</p>
+
+	<p>
+		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au<br />
+		Thanks for using Findyour,<br />
+		Kind Regards,<br />
+		The findyour Team<br />
+		<a href="www.findyour.com.au">www.findyour.com.au</a>
+	</p>
+</body>
+</html>

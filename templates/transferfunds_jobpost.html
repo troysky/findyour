@@ -6,9 +6,9 @@
 	<p>Hi {{pro.companyName}},<p/>
 	<p>There has been a new job that matches your criteria.<br />
 	Please confirm if you would like to be put forward for this job (and supply your rate / quote – if applicable).</p>
-	<p>Job Details</p>
-	<div>{{{ customerRequest }}}</div>
-	<br />
+	
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+
 	<div class="button">
 		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{jobId}}" target="_blank" style="text-decoration:none"><button>Submit my profile</button></a>
 	</div>

@@ -5,6 +5,7 @@ var dbm = require('./MongoDBManager');
 var mg = require('./MailGenerator');
 var ms = require('./MailSender');
 var constants = require('./Constants');
+//var gd = require('./GoogleDriveService');
 var q = require('q');
 
 exports.process = function(mail){
@@ -23,8 +24,9 @@ exports.process = function(mail){
 
 exports.processNewJob = function(mail){
 	console.log("start processing new job: " + mail.subject);
-	this.extractCriteria(mail.html)
+	this.extractCriteria(mail.html)	
 	.then(this.createId, this.handleError)
+	//.then(this.saveRequest, this.handleError)
 	.then(this.findNearByPostCodes, this.handleError)
 	.then(this.findPros, this.handleError)
 	.then(this.saveJobs, this.handleError)
@@ -37,6 +39,7 @@ exports.processNewRegistration = function(mail){
 	.then(this.saveRegistration, this.handleError)
 	.then(function(doc){console.log("details saved", doc)}, this.handleError);
 }
+
 
 exports.extractCriteria = function(html){
 	var self = this;
@@ -54,7 +57,8 @@ exports.extractCriteria = function(html){
 				customerRequest: html,
 				customerName: self.grepValue(window, "Name"),
 				customerEmail: self.grepValue(window, "Email"),
-				category: self.grepValue(window, "Category"),
+				customerPhone: self.grepValue(window, "Mobile Number"),
+				category: self.grepValue(window, "Category"),				
 				postCode: self.grepValue(window, "Post Code").substring(0,4)
 			}
 			deferred.resolve(criteria);
@@ -72,6 +76,12 @@ exports.createId = function(criteria){
 	criteria.id = timeInMillis;
 	return criteria;
 }
+
+
+/*exports.saveRequest = function(criteria){
+	console.log("saving request to googledrive");
+	return gd.insert(q, criteria.id, criteria.customerRequest);
+}*/
 
 exports.extractDetails = function(html){
 	var self = this;
@@ -92,6 +102,7 @@ exports.extractDetails = function(html){
 				_id: email,
 				companyName: companyName,
 				category: category,
+				profile: companyName.toLowerCase().replace(/\s/g, "-"),
 				email: email
 			}
 			deferred.resolve(details);
@@ -149,7 +160,8 @@ exports.saveJobs = function(criteria){
 			_id: criteria.id,
 			category: criteria.category,
 			customerName: criteria.customerName,
-			customerEmail: criteria.customerEmail,			
+			customerEmail: criteria.customerEmail,	
+			customerRequest: criteria.customerRequest,	
 			pro: pro
 		}
 		jobs.push(job);
@@ -170,8 +182,9 @@ exports.distribute = function(details){
 	for(var i = details.results.length -1; i >= 0; i--){
 		var pro = details.results[i];
 		var recipient = pro.email;	
-		var subject = constants.JOB_SUBJECT + " " + details.category;	
-		var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, details, pro);
+		var subject = constants.JOB_SUBJECT + " - " + details.category + " - " + details.id;	
+		var html = mg.getJobNotificationToPro(details, pro);
+		var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 		
 		console.log("sending email to " + recipient);
 		ms.send(message);		

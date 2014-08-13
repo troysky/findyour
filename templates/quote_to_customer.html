@@ -1,0 +1,32 @@
+<<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p>Hi {{customerName}},<p/>
+	<p>{{pro.companyName}} would like to do the job you have entered into findyour.<br />
+	Please confirm if you would like to be put forward for this job (and supply your rate / quote – if applicable).</p>
+
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+
+	<p>Quote Summary<br />
+	Quote: {{quote.0.quote}}<br />
+	Comment: {{quote.0.comment}}<br />
+	</p>
+
+	<p><a href="http://findyour.com.au/{{pro.profile}}">View this Professional’s profile</a></p>	
+	
+	<div class="button">
+		<a href="http://findyour.herokuapp.com/accept_job?jobId={{_id}}" target="_blank" style="text-decoration:none"><button>Accept</button></a>
+	</div>
+
+	<p>
+		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au<br />
+		Thanks for using Findyour,<br />
+		Kind Regards,<br />
+		The findyour Team<br />
+		<a href="www.findyour.com.au">www.findyour.com.au</a>
+	</p>
+
+</body>
+</html>
