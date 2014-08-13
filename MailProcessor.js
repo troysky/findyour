@@ -161,6 +161,7 @@ exports.saveJobs = function(criteria){
 			category: criteria.category,
 			customerName: criteria.customerName,
 			customerEmail: criteria.customerEmail,	
+			customerPhone: criteria.customerPhone,
 			customerRequest: criteria.customerRequest,	
 			pro: pro
 		}

@@ -9,12 +9,12 @@
 
 	<div>Job Details<br />{{{ customerRequest }}}</div><br />
 
-	<p>Quote Summary<br />
+	<p><b>Quote Summary</b><br />
 	Quote: {{quote.0.quote}}<br />
 	Comment: {{quote.0.comment}}<br />
 	</p>
 
-	<p><a href="http://findyour.com.au/{{pro.profile}}">View this Professional’s profile</a></p>	
+	<p><a href="http://findyour.com.au/{{pro.profile}}" target="_blank">View this Professional’s profile</a></p>	
 	
 	<div class="button">
 		<a href="http://findyour.herokuapp.com/accept_job?jobId={{_id}}" target="_blank" style="text-decoration:none"><button>Accept</button></a>
@@ -25,7 +25,7 @@
 		Thanks for using Findyour,<br />
 		Kind Regards,<br />
 		The findyour Team<br />
-		<a href="www.findyour.com.au">www.findyour.com.au</a>
+		<a href="www.findyour.com.au" target="_blank">www.findyour.com.au</a>
 	</p>
 
 </body>
