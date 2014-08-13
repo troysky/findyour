@@ -53,14 +53,18 @@ exports.extractCriteria = function(html){
 	}).parentWindow;
 	jsdom.jQueryify(window, jquery, function () {
 		try{
-			var criteria = {
-				customerRequest: html,
+			var criteria = {				
 				customerName: self.grepValue(window, "Name"),
 				customerEmail: self.grepValue(window, "Email"),
 				customerPhone: self.grepValue(window, "Mobile Number"),
 				category: self.grepValue(window, "Category"),				
 				postCode: self.grepValue(window, "Post Code").substring(0,4)
 			}
+			self.removeRows(window, "Email");
+			self.removeRows(window, "Mobile Number");
+
+			criteria.customerRequest = window.document.body.innerHTML;
+			
 			deferred.resolve(criteria);
 		}catch(e){
 			deferred.reject("failed to extract criteria: " + e);
@@ -177,6 +181,13 @@ exports.handleError = function(reason){
 
 exports.grepValue = function(win, key){
 	return win.$('tr:has(td:contains(' + key + '))').eq(1).next().find('td').text().trim();
+}
+
+exports.removeRows = function(win, key){
+	var label = win.$('tr:has(td:contains(' + key + '))').eq(1);
+	var value = label.next();
+	label.remove();
+	value.remove();
 }
 
 exports.distribute = function(details){	
