@@ -102,10 +102,16 @@ exports.extractDetails = function(html){
 			var companyName = self.grepValue(window, "Company Name");
 			var email = self.grepValue(window, "Email");
 			var category =self.grepValue(window, "Category");
+			var proBusinessPhone =self.grepValue(window, "Business Phone");
+			var proMobilePhone = self.grepValue(window, "Mobile Number");
+			var category =self.grepValue(window, "Category");
+
 			var details = {				
 				_id: email,
 				companyName: companyName,
 				category: category,
+				businessPhone: proBusinessPhone,
+				mobilePhone: proMobilePhone,
 				profile: companyName.toLowerCase().replace(/\s/g, "-"),
 				email: email
 			}
