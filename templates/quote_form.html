@@ -1,14 +1,48 @@
 <html>
 <head>
-	<title></title>
+	<title>Quote - Job {{jobId}}</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 </head>
-<body>
-	<p>Job {{jobId}}</p>
-	<form method="post" action="submit_profile">
+<body>	
+	<div class="row"><div class="col-md-2 col-md-offset-5" style="margin: 10px">
+		<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
+		<form class="form-horizontal" method="post" action="submit_profile"  style="width:300px">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>Quote - Job {{jobId}}</legend>
 		<input type="hidden" name="jobId" value="{{jobId}}" />
-		Quote: <input type="text" name="quote" value=""/><br />
-		Comment: <input type="text" name="comment" value=""/><br />
-		<input type="submit" name="submit" value="submit"/>
-	</form>
+
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label" for="quote">Quote</label>
+		  <div class="controls">
+		    <input id="quote" name="quote" type="text" placeholder="" class="input-xlarge" style="width:300px">	    
+		  </div>
+		</div>
+
+		<!-- Textarea -->
+		<div class="control-group">
+		  <label class="control-label" for="comment">Comment</label>
+		  <div class="controls">                     
+		    <textarea id="comment" name="comment" class="input-xlarge" style="width:300px" rows="5"></textarea>
+		  </div>
+		</div>
+
+		<!-- Button -->
+		<div class="control-group">
+		  <label class="control-label" for="SubmitButton"></label>
+		  <div class="controls">
+		    <button id="submit" name="submit" class="btn btn-primary" type="submit">Submit</button>
+		  </div>
+		</div>
+
+
+		</fieldset>
+		</form>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	</div></div>
 </body>
 </html>
