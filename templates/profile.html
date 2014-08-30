@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile - {{companyName}}</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/shop-item.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+    		<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
+            <div class="col-md-9">        		
+                <div class="thumbnail">
+                    <div class="caption-full">
+                        <h4><a target="_blank" href="{{website}}">{{companyName}}</a></h4>
+                        <img src="{{logoURL}}" />
+                    	<h4><strong>Profile</strong></h4>
+                        <h5>Contact: {{contactName}}</h5>
+                        <h5>Business Phone: {{businessPhone}}</h5>
+                        <h5>Address: {{address}}</h5>
+                        <h5>Website: <a target="_blank" href="{{website}}">{{website}}</a></h5>
+                        <h5>Email: <a href="mailto:{{email}}">{{email}}</a></h5>
+                    	
+                    	<hr />
+                        <h4><strong>About</strong></h4>
+                        <p>{{{description}}}</p>
+
+                        <hr />
+                        <h4><strong>Skills</strong></h4>
+                        <h5>{{category}}</h5>
+
+                        <hr />
+                        <h4><strong>Verifications</strong></h4>
+                        <h5>License: {{license}}</h5>
+                        <h5>Insurance: {{insurance}}</h5>
+                        <h5>ABN: {{abn}}</h5>
+
+                        <hr />
+                        <h4><strong>Rating</strong></h4>
+                        <h4>{{rating}} / 100</h4>
+                        <p>
+                        	<strong>What does the findyour Rating mean?</strong></p>
+						<p>Our Number is rated using the following Points reward system:</p>
+						<ul>
+						<li>30 pts if the company is licensed and presents the relevant forms to the findyour team</li>
+						<li>20 pts if the company has the relevant insurances and presents the relevant forms to the findyour team</li>
+						<li>10 pts if ABN has been verified</li>
+						<li>10 pts for previous work attached to the profile (or a link to their previous work)</li>
+						<li>5 pts for postitive customer feedback</li>
+						<li>-5 pts for negative customer feeback</li>
+						</ul>
+                    </div>            
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

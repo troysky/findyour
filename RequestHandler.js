@@ -40,11 +40,23 @@ exports.init = function(app){
 		.then(self.notifyCustomerWithWin, self.handleError)
 		.then(self.showAccepted.bind(this, res), self.handleError);
 	});
+
+	app.get("/profile/:pro", function(req, res) {
+	  	var prodId = req.params.pro;
+
+	  	self.getPro(prodId)
+		.then(self.showProfile.bind(this, res), self.handleError)
+	});
 }
 
 exports.getJob = function(jobId){
 	console.log("getting job", jobId);
 	return dbm.find(constants.JOBS_COL, {_id: parseFloat(jobId)});
+}
+
+exports.getPro = function(prodId){
+	console.log("getting pro", prodId);
+	return dbm.find(constants.PROS_COL, {profile: prodId});
 }
 
 exports.updateJobWithQuote = function(quote, comment, job){	
@@ -124,6 +136,13 @@ exports.showAccepted = function(res, job){
 	//show landing	
 	var page = fs.readFileSync("templates/accep_job_confirm.html", "utf8"); // bring in the HTML file
 	var html = mustache.to_html(page, job); // replace all of the data
+	res.send(html); 
+}
+
+exports.showProfile = function(res, pros){
+	var page = fs.readFileSync("templates/profile.html", "utf8"); // bring in the HTML file
+	pros[0].description = pros[0].description.replace(/\n/g, '<br />');
+	var html = mustache.to_html(page, pros[0]); // replace all of the data
 	res.send(html); 
 }
 

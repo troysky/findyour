@@ -100,20 +100,37 @@ exports.extractDetails = function(html){
 	jsdom.jQueryify(window, jquery, function () {
 		try{
 			var companyName = self.grepValue(window, "Company Name");
+			var contactName = self.grepValue(window, "Name", 3);
 			var email = self.grepValue(window, "Email");
+			var address = self.grepValue(window, "Address");			
 			var category =self.grepValue(window, "Category");
 			var proBusinessPhone =self.grepValue(window, "Business Phone");
 			var proMobilePhone = self.grepValue(window, "Mobile Number");
 			var category =self.grepValue(window, "Category");
+			var description =self.grepValue(window, "Business Description");
+			var logo =self.grepValue(window, "Logo");
+			var website =self.grepValue(window, "Your Website");
+			var license =self.grepValue(window, "Are you Licensed?");
+			var insurance =self.grepValue(window, "Do you have Insurance?");
+			var abn =self.grepValue(window, "Please provide a copy of your ABN");
 
 			var details = {				
 				_id: email,
 				companyName: companyName,
+				contactName: contactName,
 				category: category,
 				businessPhone: proBusinessPhone,
 				mobilePhone: proMobilePhone,
 				profile: companyName.toLowerCase().replace(/\s/g, "-"),
-				email: email
+				email: email,
+				address: address,
+				description: description,
+				logoURL: logo,
+				website: website,
+				license: license,
+				insurance: insurance,
+				abn: abn,
+				rating: 0
 			}
 			deferred.resolve(details);
 		}catch(e){
@@ -185,8 +202,8 @@ exports.handleError = function(reason){
 	console.log("error: " + reason);
 }
 
-exports.grepValue = function(win, key){
-	return win.$('tr:has(td:contains(' + key + '))').eq(1).next().find('td').text().trim();
+exports.grepValue = function(win, key, pos){
+	return win.$('tr:has(td:contains(' + key + '))').eq(pos || 1).next().find('td').text().trim();
 }
 
 exports.removeRows = function(win, key){
