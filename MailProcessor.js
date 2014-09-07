@@ -102,17 +102,20 @@ exports.extractDetails = function(html){
 			var companyName = self.grepValue(window, "Company Name");
 			var contactName = self.grepValue(window, "Name", 3);
 			var email = self.grepValue(window, "Email");
-			var address = self.grepValue(window, "Address");			
-			var category =self.grepValue(window, "Category");
-			var proBusinessPhone =self.grepValue(window, "Business Phone");
+			var streetAddress = self.grepValue(window, "Street Address");			
+			var city = self.grepValue(window, "City");
+			var state = self.grepValue(window, "State");
+			var postCode = self.grepValue(window, "Post Code");
+			var category = self.grepValue(window, "Category");
+			var proBusinessPhone = self.grepValue(window, "Business Phone");
 			var proMobilePhone = self.grepValue(window, "Mobile Number");
-			var category =self.grepValue(window, "Category");
-			var description =self.grepValue(window, "Business Description");
-			var logo =self.grepValue(window, "Logo");
-			var website =self.grepValue(window, "Your Website");
-			var license =self.grepValue(window, "Are you Licensed?");
-			var insurance =self.grepValue(window, "Do you have Insurance?");
-			var abn =self.grepValue(window, "Please provide a copy of your ABN");
+			var category = self.grepValue(window, "Category");
+			var description = self.grepValue(window, "Business Description");
+			var logo = self.grepValue(window, "Logo");
+			var website = self.grepValue(window, "Your Website");
+			var license = self.grepValue(window, "Are you Licensed?");
+			var insurance = self.grepValue(window, "Do you have Insurance?");
+			var abn = self.grepValue(window, "Please provide a copy of your ABN");
 
 			var details = {				
 				_id: email,
@@ -123,14 +126,18 @@ exports.extractDetails = function(html){
 				mobilePhone: proMobilePhone,
 				profile: companyName.toLowerCase().replace(/\s/g, "-"),
 				email: email,
-				address: address,
+				streetAddress: streetAddress,
+				city: city,
+				state: state,
+				postCode: postCode,
 				description: description,
 				logoURL: logo,
 				website: website,
 				license: license,
 				insurance: insurance,
 				abn: abn,
-				rating: 0
+				rating: 0,
+				customerRating: 0
 			}
 			deferred.resolve(details);
 		}catch(e){

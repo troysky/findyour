@@ -31,7 +31,7 @@
                     	<h4><strong>Profile</strong></h4>
                         <h5>Contact: {{contactName}}</h5>
                         <h5>Business Phone: {{businessPhone}}</h5>
-                        <h5>Address: {{address}}</h5>
+                        <h5>Address: {{streetAddress}} {{city}} {{state}} {{postCode}}</h5>
                         <h5>Website: <a target="_blank" href="{{website}}">{{website}}</a></h5>
                         <h5>Email: <a href="mailto:{{email}}">{{email}}</a></h5>
                     	
@@ -50,8 +50,28 @@
                         <h5>ABN: {{abn}}</h5>
 
                         <hr />
-                        <h4><strong>Rating</strong></h4>
-                        <h4>{{rating}} / 100</h4>
+                        <table>
+                            <tr>
+                                <td width="300">
+                                    <h4><strong>FindYour Rating</strong></h4>
+                                    {{#rating}}                     
+                                    <h4>{{rating}} / 100</h4>
+                                    {{/rating}}
+                                    {{^rating}}
+                                    <h4>TBA</h4>
+                                    {{/rating}}
+                                </td>
+                                <td width="50%">
+                                    <h4><strong>Customer Rating</strong></h4>
+                                    {{#customerRating}}
+                                    <h4>{{customerRating}} / 5</h4>
+                                    {{/customerRating}}
+                                    {{^customerRating}}
+                                    <h4>TBA</h4>
+                                    {{/customerRating}}
+                                </td>
+                            </tr>
+                        </table>
                         <p>
                         	<strong>What does the findyour Rating mean?</strong></p>
 						<p>Our Number is rated using the following Points reward system:</p>
