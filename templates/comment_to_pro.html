@@ -1,0 +1,33 @@
+<<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
+	<p>Hi {{pro.companyName}},<p/>
+	<p>Customer has replied to your quote/comment as below. Please submit your response.</p>	
+	
+	<p><b>Comment</b><br />
+	{{comment.0.comment}}<br />
+	</p>
+
+	<div class="button">
+		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{jobId}}" target="_blank" style="text-decoration:none"><button>Quote/Reply To Comment</button></a>
+	</div>
+	<br />
+
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+	
+	<p>
+		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au
+	</p>
+	<p>
+		Thanks for using Findyour,<br />
+		Kind Regards,
+	</p>
+	<p>
+		The findyour Team<br />
+		<a href="www.findyour.com.au" target="_blank">www.findyour.com.au</a>
+	</p>
+</body>
+</html>

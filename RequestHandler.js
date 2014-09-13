@@ -15,9 +15,7 @@ exports.init = function(app){
 
 	app.get('/submit_profile', function(req,res){ 		
 		var config = {jobId: req.query.jobId};
-		var page = fs.readFileSync("templates/quote_form.html", "utf8"); // bring in the HTML file
-		var html = mustache.to_html(page, config); // replace all of the data
-		res.send(html); 
+		res.send(mg.getRender("templates/quote_form.html", config)); 
 	});
 
 	app.post('/submit_profile', function(req,res){ 				
@@ -26,26 +24,41 @@ exports.init = function(app){
 		var comment = req.body.comment;
 		
 		self.getJob(jobId)
-		.then(self.updateJobWithQuote.bind(this, quote, comment), self.handleError)
-		.then(self.notifyCustomerWithQuote, self.handleError)
-		.then(self.showSubmitted.bind(this, res), self.handleError);
+		.then(self.updateJobWithQuote.bind(this, quote, comment), self.handleError.bind(this, res))
+		.then(self.notifyCustomerWithQuote, self.handleError.bind(this, res))
+		.then(self.showSubmitted.bind(this, res), self.handleError.bind(this, res));
 	});
 
 	app.get('/accept_job', function(req,res){ 
 		var jobId = req.query.jobId;	
 
 		self.getJob(jobId)
-		.then(self.updateJobWithAccept, self.handleError)
-		.then(self.notifyProWithWin, self.handleError)
-		.then(self.notifyCustomerWithWin, self.handleError)
-		.then(self.showAccepted.bind(this, res), self.handleError);
+		.then(self.updateJobWithAccept, self.handleError.bind(this, res))
+		.then(self.notifyProWithWin, self.handleError.bind(this, res))
+		.then(self.notifyCustomerWithWin, self.handleError.bind(this, res))
+		.then(self.showAccepted.bind(this, res), self.handleError.bind(this, res));
+	});
+
+	app.get('/reply_comment_job', function(req,res){ 
+		var config = {jobId: req.query.jobId};
+		res.send(mg.getRender("templates/customer_reply_form.html", config)); 
+	});
+
+	app.post('/submit_reply', function(req,res){ 
+		var jobId = req.body.jobId;
+		var comment = req.body.comment;
+		
+		self.getJob(jobId)
+		.then(self.updateJobWithComment.bind(this, comment), self.handleError.bind(this, res))
+		.then(self.notifyProWithComment, self.handleError.bind(this, res))
+		.then(self.showCommentSubmitted.bind(this, res), self.handleError.bind(this, res));
 	});
 
 	app.get("/profile/:pro", function(req, res) {
 	  	var prodId = req.params.pro;
 
 	  	self.getPro(prodId)
-		.then(self.showProfile.bind(this, res), self.handleError)
+		.then(self.showProfile.bind(self, res), self.handleError.bind(this, res))
 	});
 }
 
@@ -60,13 +73,14 @@ exports.getPro = function(prodId){
 }
 
 exports.updateJobWithQuote = function(quote, comment, job){	
-	if(job.length === 1){
+	if(job && job.length === 1){
 		var job = job[0];
 		//save quote in job
 		job.quote = job.quote || [];
+		var cmt = comment ? comment.replace(/(?:\r\n|\r|\n)/g, '<br />') : "";
 		var quote = {
 			quote: quote,
-			comment: comment,
+			comment: cmt,
 			dateTime: new Date()
 		};
 		job.quote.unshift(quote);
@@ -79,7 +93,7 @@ exports.updateJobWithQuote = function(quote, comment, job){
 }
 
 exports.updateJobWithAccept = function(job){	
-	if(job.length === 1){
+	if(job && job.length === 1){
 		var job = job[0];
 		job.accepted = new Date();
 		console.log("adding accepted time to job", job.accepted);
@@ -89,11 +103,36 @@ exports.updateJobWithAccept = function(job){
 	q.defer().reject("job not found");
 }
 
+exports.updateJobWithComment = function(comment, job){	
+	if(job && job.length === 1){
+		var job = job[0];
+		//save quote in job
+		job.comment = job.comment || [];
+		var cmt = comment ? comment.replace(/(?:\r\n|\r|\n)/g, '<br />') : "";
+		var comment = {
+			comment: cmt,
+			dateTime: new Date()
+		};
+		job.comment.unshift(comment);
+
+		console.log("adding comment to job", comment);
+		return dbm.save(constants.JOBS_COL, job);
+	}
+
+	q.defer().reject("job not found");
+}
+
 exports.notifyCustomerWithQuote = function(job){
 	//generate customer email
 	var recipient = job.customerEmail;	
+	var template = "templates/quote_to_customer.html"
 	var subject = constants.QUOTE_SUBJECT + " - " + job.category + " - " + job._id;	
-	var html = mg.getQuoteToCustomer(job);
+	if(job.quote.length > 1){
+		template = "templates/requote_to_customer.html";
+		subject = constants.REQUOTE_SUBJECT + " - " + job.category + " - " + job._id;	
+	}
+
+	var html = mg.getRender(template, job);
 	var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 	
 	console.log("sending email to customer", recipient);
@@ -101,11 +140,25 @@ exports.notifyCustomerWithQuote = function(job){
 	return job;	
 }
 
+exports.notifyProWithComment = function(job){
+	//generate pro email
+	var template = "templates/comment_to_pro.html"
+	var recipient = job.pro.email;	
+	var subject = constants.COMMENT_SUBJECT + " - " + job.category + " - " + job._id;	
+	var html = mg.getRender(template, job);
+	var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
+	
+	console.log("sending email to pro", recipient);
+	ms.send(message)
+	return job;	
+}
+
 exports.notifyProWithWin = function(job){
-	//generate customer email
+	//generate pro email
+	var template = "templates/win_to_pro.html"
 	var recipient = job.pro.email;	
 	var subject = constants.PRO_WIN_SUBJECT + " - " + job.category + " - " + job._id;	
-	var html = mg.getWinToPro(job);
+	var html = mg.getRender(template, job);
 	var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 	
 	console.log("sending win email to pro", recipient);
@@ -115,9 +168,10 @@ exports.notifyProWithWin = function(job){
 
 exports.notifyCustomerWithWin = function(job){
 	//generate customer email
+	var template = "templates/win_to_customer.html"
 	var recipient = job.customerEmail;	
 	var subject = constants.CUST_WIN_SUBJECT + " - " + job.category + " - " + job._id;	
-	var html = mg.getWinToCustomer(job);
+	var html = mg.getRender(template, job);
 	var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 	
 	console.log("sending win email to customer", recipient);
@@ -132,6 +186,13 @@ exports.showSubmitted = function(res, job){
 	res.send(html); 
 }
 
+exports.showCommentSubmitted = function(res, job){
+	//show landing	
+	var page = fs.readFileSync("templates/comment_submit.html", "utf8"); // bring in the HTML file
+	var html = mustache.to_html(page, job); // replace all of the data
+	res.send(html); 
+}
+
 exports.showAccepted = function(res, job){
 	//show landing	
 	var page = fs.readFileSync("templates/accep_job_confirm.html", "utf8"); // bring in the HTML file
@@ -140,13 +201,17 @@ exports.showAccepted = function(res, job){
 }
 
 exports.showProfile = function(res, pros){
+	if(!pros || pros.length === 0){
+		this.handleError(res, "Profile not found");
+		return;
+	}
 	var page = fs.readFileSync("templates/profile.html", "utf8"); // bring in the HTML file
 	pros[0].description = pros[0].description.replace(/\n/g, '<br />');
 	var html = mustache.to_html(page, pros[0]); // replace all of the data
 	res.send(html); 
 }
 
-exports.handleError = function(err){
+exports.handleError = function(res, err){
 	console.log(err);
 	res.sendfile(__dirname + '/public/error.html'); 
 }

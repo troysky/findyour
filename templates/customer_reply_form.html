@@ -1,26 +1,18 @@
 <html>
 <head>
-	<title>Quote - Job {{jobId}}</title>
+	<title>Reply - Job {{jobId}}</title>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 </head>
 <body>	
 	<div class="row"><div class="col-md-2 col-md-offset-5" style="margin: 10px">
 		<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
-		<form class="form-horizontal" method="post" action="submit_profile"  style="width:300px">
+		<form class="form-horizontal" method="post" action="submit_reply"  style="width:300px">
 		<fieldset>
 		
 		<!-- Form Name -->
-		<legend>Quote - Job {{jobId}}</legend>
+		<legend>Reply - Job {{jobId}}</legend>
 		<input type="hidden" name="jobId" value="{{jobId}}" />
-
-		<!-- Text input-->
-		<div class="control-group">
-		  <label class="control-label" for="quote">Quote</label>
-		  <div class="controls">
-		    <input id="quote" name="quote" type="text" placeholder="" class="input-xlarge" style="width:600px">	    
-		  </div>
-		</div>
 
 		<!-- Textarea -->
 		<div class="control-group">

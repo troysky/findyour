@@ -225,7 +225,13 @@ exports.distribute = function(details){
 		var pro = details.results[i];
 		var recipient = pro.email;	
 		var subject = constants.JOB_SUBJECT + " - " + details.category + " - " + details.id;	
-		var html = mg.getJobNotificationToPro(details, pro);
+		var template = "templates/job_notif_to_pro.html"
+		var config = {
+			jobId: details.id,
+			customerRequest: details.customerRequest,
+			pro: pro
+		};
+		var html = mg.getRender(template, config);
 		var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 		
 		console.log("sending email to " + recipient);

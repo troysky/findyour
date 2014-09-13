@@ -5,21 +5,22 @@
 <body>
 	<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
 	<p>Hi {{customerName}},<p/>
-	<p>{{pro.companyName}} would like to do the job you have entered into findyour.</p>
+	<p>{{pro.companyName}} has responded to your comment.</p>
 
-	<div>Job Details<br />{{{ customerRequest }}}</div><br />
-
-	<p><b>Quote Summary</b><br />
+	<p><b>Summary</b><br />
 	Quote: {{quote.0.quote}}<br />
 	Comment: {{quote.0.comment}}<br />
 	</p>
 
-	<p><a href="http://findyour.herokuapp.com/profile/{{pro.profile}}" target="_blank">View this Professional’s profile</a></p>	
-	
 	<div class="button">
 		<a href="http://findyour.herokuapp.com/accept_job?jobId={{_id}}" target="_blank" style="text-decoration:none"><button>Accept</button></a>
 		<a href="http://findyour.herokuapp.com/reply_comment_job?jobId={{_id}}" target="_blank" style="text-decoration:none"><button>Reply To Comment</button></a>
 	</div>
+	<br />
+
+	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+
+	<p><a href="http://findyour.herokuapp.com/profile/{{pro.profile}}" target="_blank">View this Professional’s profile</a></p>	
 
 	<p>
 		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au

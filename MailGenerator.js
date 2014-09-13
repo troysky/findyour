@@ -1,44 +1,9 @@
 var mustache = require("mustache");
 var fs = require('fs');
 
-exports.getJobNotificationToPro = function(details, pro){
-	/*
-	var category = details.category.replace(" ", "").toLowerCase();
-	var template = 'templates/' + category + "_jobpost.html";
-	console.log("template: " + template);
-	*/
-	var template = "templates/job_notif_to_pro.html"
-	var config = {
-		jobId: details.id,
-		customerRequest: details.customerRequest,
-		pro: pro
-	};
+exports.getRender = function(template, config){
 	var fileContents = fs.readFileSync(template).toString();
 	var html = mustache.render(fileContents, config);
-	console.log("mail contents: " + html);
-	return html;
-}
-
-exports.getQuoteToCustomer = function(job){
-	var template = "templates/quote_to_customer.html"
-	var fileContents = fs.readFileSync(template).toString();
-	var html = mustache.render(fileContents, job);
-	console.log("mail contents: " + html);
-	return html;
-}
-
-exports.getWinToPro = function(job){
-	var template = "templates/win_to_pro.html"
-	var fileContents = fs.readFileSync(template).toString();
-	var html = mustache.render(fileContents, job);
-	console.log("mail contents: " + html);
-	return html;
-}
-
-exports.getWinToCustomer = function(job){
-	var template = "templates/win_to_customer.html"
-	var fileContents = fs.readFileSync(template).toString();
-	var html = mustache.render(fileContents, job);
 	console.log("mail contents: " + html);
 	return html;
 }
