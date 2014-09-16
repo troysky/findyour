@@ -191,7 +191,7 @@ exports.saveJobs = function(criteria){
 	for(var i = criteria.results.length -1; i >= 0; i--){
 		var pro = criteria.results[i];
 		var job = {
-			_id: criteria.id,
+			_id: criteria.id + "-" + i,
 			category: criteria.category,
 			customerName: criteria.customerName,
 			customerEmail: criteria.customerEmail,	
