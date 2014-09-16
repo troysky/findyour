@@ -8,6 +8,7 @@ exports.CUST_WIN_SUBJECT = "Findyour";
 exports.SYSTEM_EMAIL = "system@findyour.com.au";
 exports.PROS_COL = "professionals";
 exports.JOBS_COL = "jobs";
+exports.CUSTOMER_TEST = "fycustomerone@gmail.com";
 exports.POSTCODE_SEARCH_CATEGORIES = [];
 
 

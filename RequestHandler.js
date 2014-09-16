@@ -64,7 +64,7 @@ exports.init = function(app){
 
 exports.getJob = function(jobId){
 	console.log("getting job", jobId);
-	return dbm.find(constants.JOBS_COL, {_id: parseFloat(jobId)});
+	return dbm.find(constants.JOBS_COL, {_id: jobId});
 }
 
 exports.getPro = function(prodId){

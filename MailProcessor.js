@@ -137,7 +137,8 @@ exports.extractDetails = function(html){
 				insurance: insurance,
 				abn: abn,
 				rating: 0,
-				customerRating: 0
+				customerRating: 0,
+				customerRatingCounter: 0
 			}
 			deferred.resolve(details);
 		}catch(e){
@@ -199,10 +200,14 @@ exports.saveJobs = function(criteria){
 			customerRequest: criteria.customerRequest,	
 			pro: pro
 		}
+		if(job.customerEmail === constants.CUSTOMER_TEST && pro.email.indexOf("fypro") < 0){
+			console.log("skipping for testing", pro.email);
+			continue;
+		}
 		jobs.push(job);
 	}
 	
-	return dbm.insert(constants.JOBS_COL, jobs, criteria);
+	return dbm.insert(constants.JOBS_COL, jobs, jobs);
 }
 
 exports.handleError = function(reason){
@@ -220,15 +225,16 @@ exports.removeRows = function(win, key){
 	value.remove();
 }
 
-exports.distribute = function(details){	
-	for(var i = details.results.length -1; i >= 0; i--){
-		var pro = details.results[i];
+exports.distribute = function(jobs){	
+	for(var i = jobs.length -1; i >= 0; i--){
+		var job = jobs[i];
+		var pro = job.pro;		
 		var recipient = pro.email;	
-		var subject = constants.JOB_SUBJECT + " - " + details.category + " - " + details.id;	
+		var subject = constants.JOB_SUBJECT + " - " + job.category + " - " + job._id;	
 		var template = "templates/job_notif_to_pro.html"
 		var config = {
-			jobId: details.id,
-			customerRequest: details.customerRequest,
+			jobId: job._id,
+			customerRequest: job.customerRequest,
 			pro: pro
 		};
 		var html = mg.getRender(template, config);
