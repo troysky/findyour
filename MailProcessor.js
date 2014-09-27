@@ -15,6 +15,8 @@ exports.process = function(mail){
 
 	if(mail.subject.indexOf("New submission") >= 0){
 		this.processNewJob(mail);
+	}else if(mail.subject.indexOf("Re submission") >= 0){
+		this.processExistingJob(mail);
 	}else if(mail.subject.indexOf("New Registration") >= 0){
 		this.processNewRegistration(mail);
 	}else{
@@ -25,10 +27,20 @@ exports.process = function(mail){
 exports.processNewJob = function(mail){
 	console.log("start processing new job: " + mail.subject);
 	this.extractCriteria(mail.html)	
-	.then(this.createId, this.handleError)
 	//.then(this.saveRequest, this.handleError)
 	.then(this.findNearByPostCodes, this.handleError)
 	.then(this.findPros, this.handleError)
+	.then(this.createJobs.bind(this), this.handleError)
+	.then(this.saveJobs, this.handleError)
+	.then(this.distribute.bind(this), this.handleError);
+}
+
+exports.processExistingJob = function(mail){
+	console.log("start processing existing job: " + mail.subject);
+	this.extractCriteria(mail.html, mail.subject)	
+	.then(this.findNearByPostCodes, this.handleError)
+	.then(this.findPros, this.handleError)
+	.then(this.createUnprocessedJobs.bind(this), this.handleError)
 	.then(this.saveJobs, this.handleError)
 	.then(this.distribute.bind(this), this.handleError);
 }
@@ -41,7 +53,7 @@ exports.processNewRegistration = function(mail){
 }
 
 
-exports.extractCriteria = function(html){
+exports.extractCriteria = function(html, subject){
 	var self = this;
 	var deferred = q.defer();
 	console.log("extracting criteria");
@@ -60,6 +72,12 @@ exports.extractCriteria = function(html){
 				category: self.grepValue(window, "Category"),				
 				postCode: self.grepValue(window, "Post Code").substring(0,4)
 			}
+			if(subject){
+				criteria.id = self.extractJobId(subject);
+			}else{
+				criteria.id = self.generateId();
+			}
+			console.log("Job ID =", criteria.id);
 			self.removeRows(window, "Email");
 			self.removeRows(window, "Mobile Number");
 
@@ -74,11 +92,13 @@ exports.extractCriteria = function(html){
 	return deferred.promise;
 }
 
-exports.createId = function(criteria){
-	var timeInMillis = (new Date()).getTime();
-	console.log("assinging id", timeInMillis);
-	criteria.id = timeInMillis;
-	return criteria;
+exports.generateId = function(){
+	return (new Date()).getTime().toString();
+}
+
+exports.extractJobId = function(subject){
+	var arry = subject.split(" ");
+	return arry[arry.length - 1].trim();
 }
 
 
@@ -186,32 +206,101 @@ exports.findPros = function(criteria){
 	return dbm.find(constants.PROS_COL, {category: criteria.category}, criteria);
 }
 
-exports.saveJobs = function(criteria){
-	console.log("saving jobs");	
+
+exports.findExistingJob = function(id, pro){
+	console.log("searching existing job for ", id, pro.profile);
+	return dbm.find(constants.JOBS_COL, {_id: id + "-" + pro.profile});
+}
+
+exports.createJobs = function(criteria){
+	var self = this;
+	if(!self.validateId(criteria.id)){
+		console.log("id validation failed, no jobs will be created");	
+		return [];
+	}
+	console.log("creating jobs");		
 	var jobs = [];
 	for(var i = criteria.results.length -1; i >= 0; i--){
 		var pro = criteria.results[i];
-		var job = {
-			_id: criteria.id + "-" + i,
-			category: criteria.category,
-			customerName: criteria.customerName,
-			customerEmail: criteria.customerEmail,	
-			customerPhone: criteria.customerPhone,
-			customerRequest: criteria.customerRequest,	
-			pro: pro
-		}
-		if(job.customerEmail === constants.CUSTOMER_TEST && pro.email.indexOf("fypro") < 0){
-			console.log("skipping for testing", pro.email);
+		if(criteria.customerEmail === constants.CUSTOMER_TEST && pro.email.indexOf("fypro") < 0){
+			console.log("testing customer - skipping", pro.email);
 			continue;
 		}
+		var job = self.createJob(criteria, pro);
 		jobs.push(job);
+	}	
+	return jobs;
+}
+
+exports.createUnprocessedJobs = function(criteria){
+	var self = this;
+	if(!self.validateId(criteria.id)){
+		console.log("id validation failed, no jobs will be created");	
+		return [];
 	}
-	
+	console.log("creating unprocessed jobs");	
+	var deferred = q.defer();	
+	var jobs = [];
+	var processed = 0;
+	for(var i = criteria.results.length - 1; i >= 0; i--){
+		var pro = criteria.results[i];
+		self.findExistingJob(criteria.id, pro).then(function(pro, docs){
+			processed++;
+			var skip = false;
+			if(docs && docs.length > 0){
+				console.log("found existing job - skipping");
+				skip = true;
+			}
+			if(criteria.customerEmail === constants.CUSTOMER_TEST && pro.email.indexOf("fypro") < 0){
+				console.log("testing customer - skipping", pro.email);
+				skip = true;
+			}
+			if(!skip){
+				var job = self.createJob(criteria, pro);
+				jobs.push(job);
+			}
+			if(processed === criteria.results.length){
+				deferred.resolve(jobs);
+			}
+		}.bind(self, pro), function(err){
+			console.log("error checking for exiting job");
+			deferred.resolve([]);
+		});		
+	}
+
+	return deferred.promise; 
+}
+
+exports.validateId = function(id){
+	if(id && !isNaN(id) && id.length === 13){
+		return true;
+	}
+	return false;
+}
+
+exports.createJob = function(criteria, pro){
+	return {
+		_id: criteria.id + "-" + pro.profile,
+		category: criteria.category,
+		customerName: criteria.customerName,
+		customerEmail: criteria.customerEmail,	
+		customerPhone: criteria.customerPhone,
+		customerRequest: criteria.customerRequest,	
+		pro: pro
+	};
+}
+
+exports.saveJobs = function(jobs){
+	if(!jobs || jobs.length === 0){
+		console.log("no jobs to save");
+		return [];
+	}
+	console.log("saving " + jobs.length + " jobs");
 	return dbm.insert(constants.JOBS_COL, jobs, jobs);
 }
 
-exports.handleError = function(reason){
-	console.log("error: " + reason);
+exports.handleError = function(err){
+	console.log("error: ", err);
 }
 
 exports.grepValue = function(win, key, pos){
@@ -240,7 +329,7 @@ exports.distribute = function(jobs){
 		var html = mg.getRender(template, config);
 		var message = mg.generate(constants.SYSTEM_EMAIL, subject, recipient, html);
 		
-		console.log("sending email to " + recipient);
+		console.log("sending email '" + subject + "' to " + recipient);
 		ms.send(message);		
 	}
 }

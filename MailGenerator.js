@@ -4,7 +4,7 @@ var fs = require('fs');
 exports.getRender = function(template, config){
 	var fileContents = fs.readFileSync(template).toString();
 	var html = mustache.render(fileContents, config);
-	console.log("mail contents: " + html);
+	//console.log("mail contents: " + html);
 	return html;
 }
 

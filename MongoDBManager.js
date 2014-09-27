@@ -18,7 +18,7 @@ exports.find = function(col, criteria, returnObj){
 	var col = db.collection(col);
 	col.find(criteria, function(err, docs) { 
 		if (err) {
-			deferred.reject(new Error("Error: ", err));
+			deferred.reject(err);
 		}
 		if(returnObj){
 			returnObj.results = docs;
@@ -35,7 +35,7 @@ exports.save = function(col, obj, returnObj){
 	var col = db.collection(col);
 	col.save(obj, function(err, doc, lastErrorObject) { 
 		if (err) {
-			deferred.reject(new Error("Error: ", err));
+			deferred.reject(err);
 		}
 		if (returnObj){
 			deferred.resolve(returnObj);
@@ -51,7 +51,7 @@ exports.insert = function(col, obj, returnObj){
 	var col = db.collection(col);
 	col.insert(obj, function(err, doc, lastErrorObject) { 
 		if (err) {
-			deferred.reject(new Error("Error: ", err));
+			deferred.reject(err);
 		}
 		if (returnObj){
 			deferred.resolve(returnObj);
