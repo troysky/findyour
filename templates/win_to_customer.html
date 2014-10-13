@@ -3,13 +3,7 @@
 	<title></title>
 	<style>
 	.box-border {
-	    -moz-border-radius: 10px;
-	    -webkit-border-radius: 10px;
-	    border-radius: 10px;
-	    border: 1px solid #cccccc;
-	    background-color: #eeeeee;
-	    width: 600px;
-	    padding:10px;
+	    
 	}
 	</style>
 </head>
@@ -18,9 +12,15 @@
 	<p>Hi {{customerName}},<p/>
 	<p>Congratulations you have found your professional for the following job {{_id}}:</p>
 
-	<div class="box-border">
-		<div><b>Next Steps</b></div><br />
-		<div><b>Contact Professional / Or Professional will call you to organise when to do the job</b></div>
+	<div style="-moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px;
+	    border: 1px solid #cccccc;
+	    background-color: #eeeeee;
+	    width: 600px;
+	    padding:10px;">
+		<div><b>Next Steps</b></div>
+		<div><ul><li><b>Contact Professional / Or Professional will call you to organise when to do the job</b></li></ul></div>
 	</div>
 
 	<p style="clear:both">Please see the Professionals details below:</p>

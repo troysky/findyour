@@ -1,9 +1,18 @@
 <html>
 <head>
 	<title></title>
-	<style>
-	.myButton {
-		-moz-box-shadow: 0px 1px 0px 0px #fff6af;
+</head>
+<body>
+	<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
+	<p>Hi {{pro.companyName}},<p/>
+	<p>Customer has replied to your quote/comment as below. Please submit your response.</p>	
+	
+	<p><b>Comment</b><br />
+	{{{comment.0.comment}}}<br />
+	</p>
+
+	<div class="button">
+		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{_id}}" target="_blank" style="-moz-box-shadow: 0px 1px 0px 0px #fff6af;
 		-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
 		box-shadow: 0px 1px 0px 0px #fff6af;
 		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
@@ -26,35 +35,7 @@
 		font-weight:bold;
 		padding:12px 25px;
 		text-decoration:none;
-		text-shadow:0px 1px 0px #ffee66;
-	}
-	.myButton:hover {
-		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
-		background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-		background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-		background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-		background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-		background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
-		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
-		background-color:#ffab23;
-	}
-	.myButton:active {
-		position:relative;
-		top:1px;
-	}
-	</style>
-</head>
-<body>
-	<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
-	<p>Hi {{pro.companyName}},<p/>
-	<p>Customer has replied to your quote/comment as below. Please submit your response.</p>	
-	
-	<p><b>Comment</b><br />
-	{{{comment.0.comment}}}<br />
-	</p>
-
-	<div class="button">
-		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{_id}}" target="_blank" class="myButton">Quote/Reply To Comment</a>
+		text-shadow:0px 1px 0px #ffee66;">Quote/Reply To Comment</a>
 	</div>
 	<br />
 
