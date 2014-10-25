@@ -26,49 +26,65 @@
             <div class="col-md-9">        		
                 <div class="thumbnail">
                     <div class="caption-full">
-                        <h4><a target="_blank" href="{{website}}">{{companyName}}</a></h4>
-                        <img src="{{logoURL}}" />
+                        <div style="clear:both;">
+                            <div style="float:left"><h4><a target="_blank" href="{{website}}">{{companyName}}</a></h4></div>
+                            <div style="float:right;font-size:8pt;"><b>Member Since</b>: {{memberSince}}<br /><b>Findyour Customers</b>: {{noCustomers}}</div>
+                        </div>
+                        <br style="clear:both;" />
+                        <img src="{{logoURL}}"  />
                     	<h4><strong>Profile</strong></h4>
                         <h5>Contact: {{contactName}}</h5>
                         <h5>Business Phone: {{businessPhone}}</h5>
                         <h5>Address: {{streetAddress}} {{city}} {{state}} {{postCode}}</h5>
                         <h5>Website: <a target="_blank" href="{{website}}">{{website}}</a></h5>
                         <h5>Email: <a href="mailto:{{email}}">{{email}}</a></h5>
-                    	
-                    	<hr />
+
+                        <div>
+                        {{#facebook}}<div style="float:left;margin-right:10px;"><a href="{{facebook}}" target="_blank"><img src="/images/facebook.png"/></a></div>{{/facebook}}
+                        {{#twitter}}<div style="float:left;margin-right:10px;"><a href="{{twitter}}" target="_blank"><img src="/images/twitter.png"/></a></div>{{/twitter}}
+                        {{#instagram}}<div style="float:left;margin-right:10px;"><a href="{{instagram}}" target="_blank"><img src="/images/instagram.png"/></a></div>{{/instagram}}
+                        </div> 
+
+                    	<br style="clear:both;" />
+                    	<hr style="clear:both;" />
                         <h4><strong>About</strong></h4>
                         <p>{{{description}}}</p>
 
                         <hr />
+                        <div style="clear:both;">
+                        <div style="width:30%;float:left">
                         <h4><strong>Skills</strong></h4>
                         <h5>{{category}}</h5>
-
-                        <hr />
+                        </div>
+                        
+                        <div style="width:70%;float:right;">
                         <h4><strong>Verifications</strong></h4>
                         <h5>License: {{license}}</h5>
                         <h5>Insurance: {{insurance}}</h5>
-                        <h5>ABN: {{abn}}</h5>
+                        <h5>ABN: <a href="http://abr.business.gov.au/SearchByAbn.aspx?SearchText={{abnNo}}" target="_blank">{{abn}}</a></h5>
+                        </div>
+                        </div>
 
+                        {{#rating}} 
+                        <hr style="clear:both"/>  
+                        <h4><strong>Past Work</strong></h4>                  
+                        <h5><a href="{{pastWork}}" target="_blank">{{pastWork}}</a></h5>
+                        {{/rating}}
+
+                        <div style="clear:both;">
                         <hr />
                         <table>
                             <tr>
                                 <td width="300">
-                                    <h4><strong>FindYour Rating</strong></h4>
+                                    <h4><strong>FindYour Rating: 
+                                    <span style="color:#FF7300">
                                     {{#rating}}                     
-                                    <h4>{{rating}} / 100</h4>
+                                    {{rating}} / 100
                                     {{/rating}}
                                     {{^rating}}
-                                    <h4>TBA</h4>
+                                    TBA
                                     {{/rating}}
-                                </td>
-                                <td width="50%">
-                                    <h4><strong>Customer Rating</strong></h4>
-                                    {{#customerRating}}
-                                    <h4>{{customerRating}} / 5 ({{customerRatingCounter}})</h4>
-                                    {{/customerRating}}
-                                    {{^customerRating}}
-                                    <h4>TBA</h4>
-                                    {{/customerRating}}
+                                    </strong></h4>
                                 </td>
                             </tr>
                         </table>
@@ -83,6 +99,43 @@
 						<li>10 pts for pictures of previous work to attach to the profile (or a link to their previous work)</li>
 						<li>5 pts for postitive customer feedback/testimonials before starting findyour</li>
 						</ul>
+                        </div>
+                        <br />
+
+                        <div style="clear:both;">
+                        <table>
+                            <tr>
+                                <td width="300">                                    
+                                    <h4><strong>Customer Rating: 
+                                        <span style="color:#FF7300">
+                                        {{#customerRating}}
+                                        {{customerRating}} / 5 ({{customerRatingCounter}})
+                                        {{/customerRating}}
+                                        {{^customerRating}}
+                                        (TBA)
+                                        {{/customerRating}}
+                                        </span>
+                                        </strong>
+                                    </h4>
+                                    {{#customerStars.length}}
+                                    {{#customerStars}}
+                                        <img src="/images/star.png"/>
+                                    {{/customerStars}}
+                                    {{/customerStars.length}}                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        {{#feedback.length}}
+                        <p>
+                            <strong>Customer Feedback</strong>
+                        </p>                       
+                          {{#feedback}}
+                          <p>{{.}}</p>
+                          {{/feedback}}                        
+                        </div> 
+                        {{/feedback.length}}
+
                     </div>            
                 </div>
 
