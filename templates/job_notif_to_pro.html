@@ -7,6 +7,8 @@
 	<p>Hi {{pro.companyName}},<p/>
 	<p>There has been a new job that matches your criteria.<br />
 	Please confirm if you would like to be put forward for this job (and supply your rate / quote – if applicable).</p>	
+
+	{{#requireContact}}<p>Note: if you would like the Customer to call you to organise a detailed quote then please specify in the comment box after submitting your profile</p>{{/requireContact}}	
 	
 	<div>Job Details<br />{{{ customerRequest }}}</div><br />
 

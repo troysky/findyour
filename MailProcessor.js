@@ -320,10 +320,12 @@ exports.distribute = function(jobs){
 		var pro = job.pro;		
 		var recipient = pro.email;	
 		var subject = constants.JOB_SUBJECT + " - " + job.category + " - " + job._id;	
-		var template = "templates/job_notif_to_pro.html"
+		var template = "templates/job_notif_to_pro.html";
+		var requireContact = (job.category === "Cleaner" || job.category === "Moving Services");
 		var config = {
 			jobId: job._id,
 			customerRequest: job.customerRequest,
+			requireContact: requireContact,
 			pro: pro
 		};
 		var html = mg.getRender(template, config);
