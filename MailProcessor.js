@@ -321,9 +321,10 @@ exports.distribute = function(jobs){
 		var recipient = pro.email;	
 		var subject = constants.JOB_SUBJECT + " - " + job.category + " - " + job._id;	
 		var template = "templates/job_notif_to_pro.html";
-		var requireContact = (job.category === "Cleaner" || job.category === "Moving Services");
+		var requireContact = (job.category === "Cleaner" || job.category === "Moving Services" || job.category === "Mortgage Broker");
 		var config = {
 			jobId: job._id,
+			customerName: job.customerName,
 			customerRequest: job.customerRequest,
 			requireContact: requireContact,
 			pro: pro

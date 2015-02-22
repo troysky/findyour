@@ -7,6 +7,8 @@
 	<p>Hi {{customerName}},<p/>
 	<p>{{pro.companyName}} would like to do the job you have entered into findyour.</p>
 
+	{{#requireContact}}<p>Note: Please provide your phone number for {{pro.companyName}} if you would like to discuss the details or organize a meeting other wise use the findyour chat and "Reply to Comment"</p>{{/requireContact}}	
+
 	<p><b>Quote Summary</b><br />
 	Quote: {{quote.0.quote}}<br />
 	Comment: {{{quote.0.comment}}}<br />

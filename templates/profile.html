@@ -52,6 +52,12 @@
                         <h4><strong>About</strong></h4>
                         <p>{{{description}}}</p>
 
+                        {{#inclusions}} 
+                        <hr style="clear:both"/>  
+                        <h4><strong>Optional inclusions</strong></h4>                  
+                        <p>{{{inclusions}}}</p>
+                        {{/inclusions}}
+
                         <hr />
                         <div style="clear:both;">
                         <div style="width:30%;float:left">
@@ -72,6 +78,12 @@
                         <h4><strong>Past Work</strong></h4>                  
                         <h5><a href="{{pastWork}}" target="_blank">{{pastWork}}</a></h5>
                         {{/pastWork}}
+
+                        {{#awards}} 
+                        <hr style="clear:both"/>  
+                        <h4><strong>Awards Received</strong></h4>                  
+                        <p>{{{awards}}}</p>
+                        {{/awards}}
 
                         <div style="clear:both;">
                         <hr />

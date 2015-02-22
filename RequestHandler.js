@@ -127,6 +127,7 @@ exports.notifyCustomerWithQuote = function(job){
 	var recipient = job.customerEmail;	
 	var template = "templates/quote_to_customer.html"
 	var subject = constants.QUOTE_SUBJECT + " - " + job.category + " - " + job._id;	
+	job.requireContact = (job.category === "Cleaner" || job.category === "Moving Services" || job.category === "Mortgage Broker");
 	if(job.quote.length > 1){
 		template = "templates/requote_to_customer.html";
 		subject = constants.REQUOTE_SUBJECT + " - " + job.category + " - " + job._id;	
