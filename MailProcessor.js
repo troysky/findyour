@@ -52,7 +52,6 @@ exports.processNewRegistration = function(mail){
 	.then(function(doc){console.log("details saved", doc)}, this.handleError);
 }
 
-
 exports.extractCriteria = function(html, subject){
 	var self = this;
 	var deferred = q.defer();
