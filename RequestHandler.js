@@ -13,9 +13,9 @@ exports.init = function(app){
 		res.sendfile(__dirname + '/public/index.html'); 
 	});
 
-	app.get('/submit_profile', function(req,res){ 		
-		var config = {jobId: req.query.jobId};
-		res.send(mg.getRender("templates/quote_form.html", config)); 
+	app.get('/submit_profile', function(req,res){ 			
+		self.getJob(req.query.jobId)
+		.then(self.submitQuoteForm.bind(this, self.getConversations,res), self.handleError.bind(this, res));		
 	});
 
 	app.post('/submit_profile', function(req,res){ 				
@@ -40,8 +40,8 @@ exports.init = function(app){
 	});
 
 	app.get('/reply_comment_job', function(req,res){ 
-		var config = {jobId: req.query.jobId};
-		res.send(mg.getRender("templates/customer_reply_form.html", config)); 
+		self.getJob(req.query.jobId)
+		.then(self.submitCommentForm.bind(this, self.getConversations,res), self.handleError.bind(this, res));		
 	});
 
 	app.post('/submit_reply', function(req,res){ 
@@ -70,6 +70,34 @@ exports.getJob = function(jobId){
 exports.getPro = function(prodId){
 	console.log("getting pro", prodId);
 	return dbm.find(constants.PROS_COL, {profile: prodId});
+}
+
+exports.submitQuoteForm = function(fn, res, jobs){
+	if(jobs && jobs.length === 1){
+		var job = jobs[0];		
+		var config = {jobId: job._id, conversation: fn(job)};		
+		res.send(mg.getRender("templates/quote_form.html", config)); 
+	}
+	q.defer().reject("job not found");
+}
+
+exports.submitCommentForm = function(fn, res, jobs){
+	if(jobs && jobs.length === 1){
+		var job = jobs[0];
+		var config = {jobId: job._id, conversation: fn(job)};
+		res.send(mg.getRender("templates/customer_reply_form.html", config)); 
+	}
+	q.defer().reject("job not found");	
+}
+
+exports.getConversations = function(job){
+	var quotes = job.quote;
+	var comments = job.comment;
+	var merge = quotes.concat(comments);
+	merge.sort(function(a, b){
+		return b.dateTime.getTime() - a.dateTime.getTime();
+	}); 
+	return merge;
 }
 
 exports.updateJobWithQuote = function(quote, comment, job){	

@@ -68,7 +68,8 @@ exports.extractCriteria = function(html, subject){
 				customerName: self.grepValue(window, "Name"),
 				customerEmail: self.grepValue(window, "Email"),
 				customerPhone: self.grepValue(window, "Mobile Number"),
-				category: self.grepValue(window, "Category"),				
+				category: self.grepValue(window, "Category"),	
+				urgency: self.grepValue(window, "When would you like this professional to start"),
 				postCode: self.grepValue(window, "Post Code").substring(0,4)
 			}
 			if(subject){
@@ -285,7 +286,8 @@ exports.createJob = function(criteria, pro){
 		customerEmail: criteria.customerEmail,	
 		customerPhone: criteria.customerPhone,
 		customerRequest: criteria.customerRequest,	
-		pro: pro
+		pro: pro,
+		urgency: criteria.urgency ? criteria.urgency.indexOf("URGENTLY") >= 0 : false
 	};
 }
 
@@ -318,7 +320,7 @@ exports.distribute = function(jobs){
 		var job = jobs[i];
 		var pro = job.pro;		
 		var recipient = pro.email;	
-		var subject = constants.JOB_SUBJECT + " - " + job.category + " - " + job._id;	
+		var subject = constants.JOB_SUBJECT + " - " + job.category + " - " + job._id + (job.urgency ? " - URGENT" : "");	
 		var template = "templates/job_notif_to_pro.html";
 		var requireContact = (job.category === "Cleaner" || job.category === "Moving Services" || job.category === "Mortgage Broker");
 		var config = {

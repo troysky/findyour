@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 </head>
 <body>	
-	<div class="row"><div class="col-md-2 col-md-offset-5" style="margin: 10px">
+	<div class="row"><div class="col-md-6" style="margin: 10px">
 		<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
+		<legend>Quote - Job {{jobId}}</legend>
 		<form class="form-horizontal" method="post" action="submit_profile"  style="width:300px">
 		<fieldset>
 		
-		<!-- Form Name -->
-		<legend>Quote - Job {{jobId}}</legend>
+		<!-- Form Name -->		
 		<input type="hidden" name="jobId" value="{{jobId}}" />
 
 		<!-- Text input-->
@@ -28,7 +28,7 @@
 		  <div class="controls">                     
 		    <textarea id="comment" name="comment" class="input-xlarge" style="width:600px" rows="15"></textarea>
 		  </div>
-		</div>
+		</div>					    
 
 		<!-- Button -->
 		<div class="control-group">
@@ -37,10 +37,30 @@
 		    <button id="submit" name="submit" class="btn btn-primary" type="submit">Submit</button>
 		  </div>
 		</div>
-
-
 		</fieldset>
 		</form>
+		<br />
+		<div>
+			{{#conversation.length}}
+	        {{#conversation}}
+	        	{{#quote}}                  
+                <div class="panel panel-info">
+                	<div class="panel-heading"><strong>From Pro:</strong> {{dateTime}}</div>
+                {{/quote}}
+                {{^quote}}
+                <div class="panel panel-success">
+                	<div class="panel-heading"><strong>From Customer:</strong> {{dateTime}}</div>
+                {{/quote}}	 
+				  <div class="panel-body">
+				    {{#quote}}            
+	                <span>Quote: {{quote}}</span><br />
+	                {{/quote}}         
+		            <span>{{comment}}</span><br />
+				  </div>
+				</div>
+	        {{/conversation}}
+	        {{/conversation.length}}  
+		</div>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	</div></div>
