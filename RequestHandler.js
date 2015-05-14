@@ -93,11 +93,14 @@ exports.submitCommentForm = function(fn, res, jobs){
 exports.getConversations = function(job){
 	var quotes = job.quote;
 	var comments = job.comment;
-	var merge = quotes.concat(comments);
-	merge.sort(function(a, b){
-		return b.dateTime.getTime() - a.dateTime.getTime();
-	}); 
-	return merge;
+	if(quotes){
+		var merge = comments ? quotes.concat(comments) : quotes;
+		merge.sort(function(a, b){
+			return b.dateTime.getTime() - a.dateTime.getTime();
+		}); 
+		return merge;
+	}
+	return [];
 }
 
 exports.updateJobWithQuote = function(quote, comment, job){	

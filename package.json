@@ -13,7 +13,7 @@
     "jquery": "~2.1.1",
     "q": "~1.0.1",
     "request": "~2.36.0",
-    "mongojs": "~0.13.0",
+    "mongojs": "~0.17.1",
     "newrelic": "~1.8.1",
     "mustache": "~0.8.2",
     "googleapis": "~1.0.4",
