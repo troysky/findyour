@@ -203,7 +203,14 @@ exports.findNearByPostCodes = function(criteria){
 
 exports.findPros = function(criteria){
 	console.log("searching pros for ", criteria.category);	
-	return dbm.find(constants.PROS_COL, {category: criteria.category}, criteria);
+	var query = {category: criteria.category};
+	if(criteria.postCode){
+		query.$or = [
+				{ postCodesToCover: { $exists: false } },
+				{ postCodesToCover: criteria.postCode}
+			];
+	}
+	return dbm.find(constants.PROS_COL, query, criteria);
 }
 
 
