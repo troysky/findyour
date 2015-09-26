@@ -1,6 +1,6 @@
 var mongojs = require('mongojs');
 var config = {
-    dbConnStr: 'jndsol:jndsolpass@kahana.mongohq.com:10040/app26850333'
+    dbConnStr: 'jndsol:jndsolpass@candidate.50.mongolayer.com:10728/app26850333'
 }
 var db = mongojs(config.dbConnStr);
 var q = require('q');

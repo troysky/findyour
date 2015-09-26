@@ -1,0 +1,1 @@
+{"options":{"create":"professionals","capped":false},"indexes":[{"v":1,"name":"_id_","key":{"_id":1},"ns":"app26850333.professionals"}]}
