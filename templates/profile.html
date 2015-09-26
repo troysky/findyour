@@ -32,13 +32,25 @@
                         </div>
                         <br style="clear:both;" />
                         <img src="{{logoURL}}"  />
-                    	<h4><strong>Profile</strong></h4>
-                        <h5>Contact: {{contactName}}</h5>
-                        <h5>Business Phone: {{businessPhone}}</h5>
-                        <h5>Address: {{streetAddress}} {{city}} {{state}} {{postCode}}</h5>
-                        <h5>Website: <a target="_blank" href="{{website}}">{{website}}</a></h5>
-                        <h5>Email: <a href="mailto:{{email}}">{{email}}</a></h5>
-
+                    	<div style="clear:both;">
+							<div style="width:50%;float:left">
+								<h4><strong>Profile</strong></h4>
+								<h5>Contact: {{contactName}}</h5>
+								<h5>Business Phone: {{businessPhone}}</h5>
+								<h5>Address: {{streetAddress}} {{city}} {{state}} {{postCode}}</h5>
+								<h5>Website: <a target="_blank" href="{{website}}">{{website}}</a></h5>
+								<h5>Email: <a href="mailto:{{email}}">{{email}}</a></h5>
+							</div>
+                        
+							<div style="width:50%;float:right;">
+								<h4> <h4/>
+								<br/>
+								<h5>Work base Post Code: {{workBasePostCode}}</h5>
+								<h5>Work radius/coverage from Post Code: {{radius}}km</h5>
+							</div>
+                        </div>
+						
+						<div style="clear:both;">   
                         <div>
                         {{#facebook}}<div style="float:left;margin-right:10px;"><a href="{{facebook}}" target="_blank"><img src="/images/facebook.png"/></a></div>{{/facebook}}
                         {{#twitter}}<div style="float:left;margin-right:10px;"><a href="{{twitter}}" target="_blank"><img src="/images/twitter.png"/></a></div>{{/twitter}}
