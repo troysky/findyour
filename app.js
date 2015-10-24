@@ -9,6 +9,8 @@ var path = require('path');
 var mailListener = require('./MailListener');
 var newrelic = require('newrelic');
 var requestHandler = require('./RequestHandler');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
 
 var app = express();
 
@@ -35,8 +37,12 @@ http.createServer(app).listen(app.get('port'), function(){
 
 requestHandler.init(app);
 
-mailListener.start();
+mailListener.start(eventEmitter);
 
-
+var onDisconnect = function() {
+  console.log("imapReconnecting");
+  mailListener.start(eventEmitter);
+}
+eventEmitter.on('imapDisconnected', onDisconnect);
 
 
