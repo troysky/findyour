@@ -48,5 +48,3 @@ exports.start = function(){
     console.log(attachment.path);
   });
 }
-
-setTimeout(function(){console.log("killing process");process.exit();}, 10000);
