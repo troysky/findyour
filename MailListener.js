@@ -28,6 +28,9 @@ exports.start = function(){
 
   mailListener.on("server:disconnected", function(){
     console.log("imapDisconnected");
+    mailListener.stop();
+    mailListener.start();
+    console.log("imapReconnecting");
   });
 
   mailListener.on("error", function(err){
@@ -46,4 +49,4 @@ exports.start = function(){
   });
 }
 
-
+setTimeout(function(){console.log("killing process");process.exit();}, 10000);
