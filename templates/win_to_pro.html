@@ -23,7 +23,7 @@
 	Phone: {{customerPhone}}<br/>
 	Email: {{customerEmail}}</p>
 
-	<div>Job Details<br />{{{ customerRequest }}}</div><br />	
+	<div><b>Job Details</b><br />{{{ customerRequest }}}</div><br />	
 	
 	<p>
 		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au
@@ -35,6 +35,12 @@
 	<p>
 		The findyour Team<br />
 		<a href="www.findyour.com.au" target="_blank">www.findyour.com.au</a>
+		<div style="clear:both;">   
+                        <div>
+                        {{#facebook}}<div style="float:left;margin-right:10px;"><a href="https://www.facebook.com/Findyour-717317991618486/" target="_blank"><img src="/images/facebook.png"/></a></div>{{/facebook}}
+                        {{#twitter}}<div style="float:left;margin-right:10px;"><a href="https://twitter.com/findyourservice" target="_blank"><img src="/images/twitter.png"/></a></div>{{/twitter}}
+                        {{#youtube}}<div style="float:left;margin-right:10px;"><a href="https://www.youtube.com/watch?v=XKKSvfuFMrU" target="_blank"><img src="/images/youtube.png"/></a></div>{{/youtube}}
+						</div> 
 	</p>
 </body>
 </html>

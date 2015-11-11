@@ -11,7 +11,12 @@
 	Quote: {{quote.0.quote}}<br />
 	Comment: {{{quote.0.comment}}}<br />
 	</p>
-
+	
+	<p><a href="http://findyour.herokuapp.com/profile/{{pro.profile}}" target="_blank">View this Professional’s profile</a></p>	
+		<p><i><b>Note:</b></br>
+	<li>If you choose to accept this Professional then you have chosen this Professional over the rest. </li>
+	<li>We will then send your details to the pro and he/she will contact you to commence your job.</li></i></p>
+	
 	<div class="button">
 		<a href="http://findyour.herokuapp.com/accept_job?jobId={{_id}}" target="_blank" style="-moz-box-shadow: 0px 1px 0px 0px #fff6af;
 		-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
@@ -36,7 +41,7 @@
 		font-weight:bold;
 		padding:12px 25px;
 		text-decoration:none;
-		text-shadow:0px 1px 0px #ffee66;">Accept</a>
+		text-shadow:0px 1px 0px #ffee66;">Accept This Pro</a>
 		<a href="http://findyour.herokuapp.com/reply_comment_job?jobId={{_id}}" target="_blank" style="-moz-box-shadow: 0px 1px 0px 0px #fff6af;
 		-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
 		box-shadow: 0px 1px 0px 0px #fff6af;
@@ -64,9 +69,9 @@
 	</div>
 	<br />
 
-	<div>Job Details<br />{{{ customerRequest }}}</div><br />
+	<div><b>Job Details</b><br />{{{ customerRequest }}}</div><br />
 
-	<p><a href="http://findyour.herokuapp.com/profile/{{pro.profile}}" target="_blank">View this Professional’s profile</a></p>	
+
 
 	<p>
 		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au

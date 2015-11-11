@@ -10,8 +10,6 @@
 
 	{{#requireContact}}<p>Note: Please provide your phone number for {{customerName}} if you would like to discuss the details or organise a meeting, otherwise use the findyour "Comment" section after Submiting your profile</p>{{/requireContact}}	
 	
-	<div>Job Details<br />{{{ customerRequest }}}</div><br />
-
 	<div class="button">
 		<a href="http://findyour.herokuapp.com/submit_profile?jobId={{jobId}}" target="_blank" style="-moz-box-shadow: 0px 1px 0px 0px #fff6af;
 		-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
@@ -38,11 +36,11 @@
 		text-decoration:none;
 		text-shadow:0px 1px 0px #ffee66;">Submit my profile</a>
 	</div>
-	<p>Next Steps <br />
+	<p><b>Next Steps</b><br />
 	-	Customer will review the Professionals and choose one<br />
 	-	The successful Professional will have the details of the customer sent to them
 	</p>
-
+	<div><b>Job Details</b><br />{{{ customerRequest }}}</div><br />
 	<p>
 		If you have any questions you can always reach the Findyour team via email at support@findyour.com.au
 	</p>
