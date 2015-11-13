@@ -40,9 +40,9 @@ exports.init = function(app){
 		.then(self.notifyOtherPros.bind(this,req), self.handleError.bind(this, res))
 		.then(self.showAccepted.bind(this, res), self.handleError.bind(this, res));
 	});
-	app.get('/accept_job_test', function(req,res){ 
-		res.send("test");
-	});
+	// app.get('/accept_job_test', function(req,res){ 
+	// 	res.send("test");
+	// });
 
 	app.get('/reply_comment_job', function(req,res){ 
 		self.getJob(req.query.jobId)
