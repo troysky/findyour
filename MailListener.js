@@ -36,8 +36,8 @@ exports.start = function(eventEmitter){
 
 function createMailListener() {
   var mailListener = new MailListener({
-    username: "jndsolutiontest@gmail.com",
-    password: "243211bc",
+    username: "fyautomation@gmail.com",
+    password: "Defence5",
     host: "imap.gmail.com",
     port: 993, // imap port
     tls: true,
