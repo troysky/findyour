@@ -40,9 +40,9 @@ exports.init = function(app){
 		.then(self.notifyOtherPros.bind(this,req), self.handleError.bind(this, res))
 		.then(self.showAccepted.bind(this, res), self.handleError.bind(this, res));
 	});
-	app.get('/accept_job_test', function(req,res){ 
-		res.send("test");
-	});
+	// app.get('/accept_job_test', function(req,res){ 
+	// 	res.send("test");
+	// });
 
 	app.get('/reply_comment_job', function(req,res){ 
 		self.getJob(req.query.jobId)
@@ -286,7 +286,7 @@ exports.showAccepted = function(res, job){
 		res.send(html); 
 	}
 	else{
-		res.send("Job Closed");
+		res.send("Job is Closed you have already chosen a professional");
 	}
 	
 }
@@ -332,8 +332,7 @@ exports.notifyOtherPros = function(req,jobs){
 			}
 			else {
 				var job = jobs[i];
-				job.quote = job.quote || [];
-				if(job.quote.length > 1){
+				if(job.quote){
 					sendEmails("templates/notify_other_pros.html",job,job.pro.email);
 				}
 
