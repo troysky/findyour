@@ -4,11 +4,11 @@
 </head>
 <body>
 	<img src="http://www.findyour.com.au/wp-content/uploads/sites/2/2013/06/Findyour_Long_Logo_New-300x137.png" />
-	<p>Hi {{pro.companyName}}</p>
+	<p>Hi {{customerName}}</p>
 
-	<p>{{customerName}} has chosen a {{category}} for job {{_id}}. This job is now closed!</p>
+	<p>This job is closed! You have already chosen a {{category}} for job {{_id}}. </p>
 
-	<p>Please leave your feedback on the findyour experience (by return of email). So that we can improve the process!</p>
+	<p><b>Please leave your feedback on your findyour experience (by return of email), so that we can improve the process!</b></p>
 
 	<p>If you have any question you can always reach the findyour team via email at support@findyour.com.au</p>
 
@@ -16,6 +16,13 @@
 	<p>
 		The findyour Team<br />
 		<a href="www.findyour.com.au" target="_blank">www.findyour.com.au</a>
+			<div style="clear:both;">   
+           <div>
+            {{#facebook}}<div style="float:left;margin-right:10px;"><a href="https://web.facebook.com/Findyour-717317991618486/" target="_blank"><img src="/images/facebook.png"/></a></div>{{/facebook}}
+            {{#twitter}}<div style="float:left;margin-right:10px;"><a href="https://twitter.com/findyourservice" target="_blank"><img src="/images/twitter.png"/></a></div>{{/twitter}}
+            {{#youtube}}<div style="float:left;margin-right:10px;"><a href="https://www.youtube.com/watch?v=po36LNjhuGw" target="_blank"><img src="/images/youtube.png"/></a></div>{{/youtube}}
+			</div> 
+   	<br style="clear:both;" />	
 	</p>
 </body>
 </html>
