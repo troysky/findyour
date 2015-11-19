@@ -143,6 +143,10 @@ exports.extractDetails = function(html){
 			var linkedin = self.grepValue(window,"Linkedin");
 			var youtube = self.grepValue(window,"youtube");
 			var radius = self.grepValue(window,"What distance do you want to cover for work?");
+			var inclusions = self.listParser(window,"Inclusions of your service");
+			var insurance = self.confirmationParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
+			var insurance = self.insuranceParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
+			var license = self.licenseParser(window,"Are you Licensed?","Please provide your License number and send a copy to the findyour team");
 			var details = {				
 				_id: email,
 				companyName: companyName,
@@ -327,7 +331,45 @@ exports.handleError = function(err){
 exports.grepValue = function(win, key, pos){
 	return win.$('tr:has(td:contains(' + key + '))').eq(pos || 1).next().find('td').text().trim();
 }
+exports.listParser = function(win, key, pos){
+	var return_array = []
+	$('tr:has(td:contains(Inclusions of your service))').eq(pos || 1).next().find('td ul li').each(function(){
+		return_array.push( $(this).text());
+	});
+	return return_array;
+}
+exports.insuranceParser = function(win, key1, key2, pos){
+	var confirmation = this.grepValue(win,key1);
+	var companies = [];
+	var status = "";
+	if (confirmation == "Yes"){
+		companies = this.listParser(win,key2);
+		status="To be verified";
+	}
+	
+	return {
+		confirmation: confirmation,
+		companies: companies,
+		status: status
+	}
 
+}
+exports.licenseParser = function(win, key1, key2, pos){
+	var confirmation = this.grepValue(win,key1);
+	var license_no = "";
+	var status = "";
+	if (confirmation == "Yes"){
+		license = this.grepValue(win,key2);
+		status="To be verified";
+	}
+	
+	return {
+		confirmation: confirmation,
+		license_no: license_no,
+		status: status
+	}
+
+}
 exports.removeRows = function(win, key){
 	var label = win.$('tr:has(td:contains(' + key + '))').eq(1);
 	var value = label.next();
