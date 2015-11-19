@@ -139,10 +139,10 @@ exports.extractDetails = function(html){
 			var workBasePostCode = self.grepValue(window, "What suburb do you work around in NSW?");
 			var facebook = self.grepValue(window, "facebook");
 			var twitter = self.grepValue(window,"Twitter");
-			var instagram = self.grepValue(window,"Instagram");;
-			var linkedin = self.grepValue(window,"Linkedin");;
-			var youtube = self.grepValue(window,"youtube");;
-
+			var instagram = self.grepValue(window,"Instagram");
+			var linkedin = self.grepValue(window,"Linkedin");
+			var youtube = self.grepValue(window,"youtube");
+			var radius = self.grepValue(window,"What distance do you want to cover for work?");
 			var details = {				
 				_id: email,
 				companyName: companyName,
