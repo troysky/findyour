@@ -346,13 +346,14 @@ exports.listParser = function(win, key, pos){
 exports.tableParser = function(win, key, pos){
 	var return_array = []
 	var rows = win.$('tr:has(td:contains('+ key +'))').eq(1).next().find('td tr td');
+
 	for (var i = 3; i < rows.length; i=i+3){
-		var row = { 
+		console.log(i);
+		return_array.push({ 
 			award: win.$(rows[i]).text().trim(),
 			year_received: win.$(rows[i+1]).text().trim(),
 			position: win.$(rows[i+2]).text().trim() 
-		}
-		return_array.push(row);
+		});
 	}
 	return return_array;
 }
