@@ -146,6 +146,7 @@ exports.extractDetails = function(html){
 			var inclusions = self.listParser(window,"Inclusions of your service");
 			var insurance = self.insuranceParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
 			var license = self.licenseParser(window,"Are you Licensed?","Please provide your License number and send a copy to the findyour team");
+			var awards = self.tableParser(window,"Awards you have received");
 			var details = {				
 				_id: email,
 				companyName: companyName,
@@ -177,7 +178,8 @@ exports.extractDetails = function(html){
 				youtube: youtube,
 				inclusions: inclusions,
 				license: license,
-				insurance: insurance
+				insurance: insurance,
+				awards: awards
 
 			}
 			deferred.resolve(details);
@@ -341,6 +343,19 @@ exports.listParser = function(win, key, pos){
 	});
 	return return_array;
 }
+exports.tableParser = function(win, key, pos){
+	var return_array = []
+	var rows = win.$('tr:has(td:contains('+ key +'))').eq(1).next().find('td tr td');
+	for (var i = 3; i < rows.length; i=i+3){
+		var row = { 
+			award: rows[i].text().trim(),
+			year_received: rows[i+1].text().trim(),
+			position: rows[i+2].text().trim() 
+		}
+		return_array.push(row);
+	}
+	return return_array;
+}
 exports.insuranceParser = function(win, key1, key2, pos){
 	var confirmation = this.grepValue(win,key1);
 	var companies = [];
@@ -362,7 +377,7 @@ exports.licenseParser = function(win, key1, key2, pos){
 	var license_no = "";
 	var status = "";
 	if (confirmation == "Yes"){
-		license = this.grepValue(win,key2);
+		license_no = this.grepValue(win,key2);
 		status="To be verified";
 	}
 	
