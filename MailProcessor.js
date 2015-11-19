@@ -175,6 +175,9 @@ exports.extractDetails = function(html){
 				instagram: instagram,
 				linkedin: linkedin,
 				youtube: youtube,
+				inclusions: inclusions,
+				license: license,
+				insurance: insurance
 
 			}
 			deferred.resolve(details);
@@ -333,8 +336,8 @@ exports.grepValue = function(win, key, pos){
 }
 exports.listParser = function(win, key, pos){
 	var return_array = []
-	$('tr:has(td:contains(Inclusions of your service))').eq(pos || 1).next().find('td ul li').each(function(){
-		return_array.push( $(this).text());
+	// win.$('tr:has(td:contains(Inclusions of your service))').eq(pos || 1).next().find('td ul li').each(function(){
+		// return_array.push( $(this).text());
 	});
 	return return_array;
 }
