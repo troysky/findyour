@@ -336,8 +336,8 @@ exports.grepValue = function(win, key, pos){
 }
 exports.listParser = function(win, key, pos){
 	var return_array = []
-	// win.$('tr:has(td:contains(Inclusions of your service))').eq(pos || 1).next().find('td ul li').each(function(){
-		// return_array.push( $(this).text());
+	win.$('tr:has(td:contains(Inclusions of your service))').eq(pos || 1).next().find('td ul li').each(function(){
+		return_array.push( $(this).text());
 	});
 	return return_array;
 }
