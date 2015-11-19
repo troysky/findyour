@@ -347,7 +347,7 @@ exports.tableParser = function(win, key, pos){
 	var return_array = []
 	var rows = win.$('tr:has(td:contains('+ key +'))').eq(1).next().find('td tr td');
 
-	for (var i = 3; i < rows.length; i=i+3){
+	for (var i = 0; i < rows.length; i=i+3){
 		console.log(i);
 		return_array.push({ 
 			award: win.$(rows[i]).text().trim(),
