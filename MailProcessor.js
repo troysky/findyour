@@ -144,7 +144,6 @@ exports.extractDetails = function(html){
 			var youtube = self.grepValue(window,"youtube");
 			var radius = self.grepValue(window,"What distance do you want to cover for work?");
 			var inclusions = self.listParser(window,"Inclusions of your service");
-			var insurance = self.confirmationParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
 			var insurance = self.insuranceParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
 			var license = self.licenseParser(window,"Are you Licensed?","Please provide your License number and send a copy to the findyour team");
 			var details = {				
@@ -175,7 +174,8 @@ exports.extractDetails = function(html){
 				twitter: twitter,
 				instagram: instagram,
 				linkedin: linkedin,
-				youtube: youtube
+				youtube: youtube,
+
 			}
 			deferred.resolve(details);
 		}catch(e){
