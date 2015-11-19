@@ -136,6 +136,12 @@ exports.extractDetails = function(html){
 			var license = self.grepValue(window, "Are you Licensed?");
 			var insurance = self.grepValue(window, "Do you have Insurance?");
 			var abn = self.grepValue(window, "Please provide a copy of your ABN");
+			var workBasePostCode = self.grepValue(window, "What suburb do you work around in NSW?");
+			var facebook = self.grepValue(window, "facebook");
+			var twitter = self.grepValue(window,"Twitter");
+			var instagram = self.grepValue(window,"Instagram");;
+			var linkedin = self.grepValue(window,"Linkedin");;
+			var youtube = self.grepValue(window,"youtube");;
 
 			var details = {				
 				_id: email,
@@ -158,7 +164,14 @@ exports.extractDetails = function(html){
 				abn: abn,
 				rating: 0,
 				customerRating: 0,
-				customerRatingCounter: 0
+				customerRatingCounter: 0,
+				workBasePostCode: workBasePostCode,
+				radius: radius,
+				facebook: facebook,
+				twitter: twitter,
+				instagram: instagram,
+				linkedin: linkedin,
+				youtube: youtube
 			}
 			deferred.resolve(details);
 		}catch(e){
