@@ -120,7 +120,7 @@ exports.extractDetails = function(html){
 	jsdom.jQueryify(window, jquery, function () {
 		try{
 			var companyName = self.grepValue(window, "Company Name");
-			var contactName = self.grepValue(window, "Name", 3);
+			var contactName = self.grepValue(window, "Name", 2);
 			var email = self.grepValue(window, "Email");
 			var streetAddress = self.grepValue(window, "Street Address");			
 			var city = self.grepValue(window, "City");
