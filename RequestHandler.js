@@ -299,10 +299,6 @@ exports.showProfile = function(res, pros){
 	var page = fs.readFileSync("templates/profile.html", "utf8"); // bring in the HTML file
 	pros[0].description = pros[0].description.replace(/\n/g, '<br />');
 	pros[0].abnNo = pros[0].abn ? pros[0].abn.split(" ")[0] : null;	
-	if(pros[0].awards
-
-
-
 	var html = mustache.to_html(page, pros[0]); // replace all of the data
 	res.send(html); 
 }
