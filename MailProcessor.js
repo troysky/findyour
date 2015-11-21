@@ -341,21 +341,20 @@ exports.listParser = function(win, key, pos){
 	win.$('tr:has(td:contains(' + key + '))').eq(pos || 1).next().find('td ul li').each(function(){
 		return_array.push( win.$(this).text());
 	});
-	return return_array;
+	return return_array.join(", ");
 }
 exports.tableParser = function(win, key, pos){
 	var return_array = []
 	var rows = win.$('tr:has(td:contains('+ key +'))').eq(1).next().find('td tr td');
 
 	for (var i = 0; i < rows.length; i=i+3){
-		console.log(i);
-		return_array.push({ 
-			award: win.$(rows[i]).text().trim(),
-			year_received: win.$(rows[i+1]).text().trim(),
-			position: win.$(rows[i+2]).text().trim() 
-		});
+		return_array.push([
+			win.$(rows[i]).text().trim(),
+			win.$(rows[i+1]).text().trim(),
+			win.$(rows[i+2]).text().trim()
+		].join(" - "));
 	}
-	return return_array;
+	return return_array.join(", ");
 }
 exports.insuranceParser = function(win, key1, key2, pos){
 	var confirmation = this.grepValue(win,key1);
@@ -364,13 +363,13 @@ exports.insuranceParser = function(win, key1, key2, pos){
 	if (confirmation == "Yes"){
 		companies = this.listParser(win,key2);
 		status="To be verified";
+		return [confirmation,companies.join(,), status].join(" - ")
 	}
+	else
+		return "N/A";
 	
-	return {
-		confirmation: confirmation,
-		companies: companies,
-		status: status
-	}
+
+	
 
 }
 exports.licenseParser = function(win, key1, key2, pos){
@@ -380,13 +379,11 @@ exports.licenseParser = function(win, key1, key2, pos){
 	if (confirmation == "Yes"){
 		license_no = this.grepValue(win,key2);
 		status="To be verified";
+		return [license_no, status].join(" - ")
 	}
+	else
+		return "N/A";
 	
-	return {
-		confirmation: confirmation,
-		license_no: license_no,
-		status: status
-	}
 
 }
 exports.removeRows = function(win, key){
