@@ -363,7 +363,7 @@ exports.insuranceParser = function(win, key1, key2, pos){
 	if (confirmation == "Yes"){
 		companies = this.listParser(win,key2);
 		status="To be verified";
-		return [confirmation,companies, status].join(" - ")
+		return [companies, status].join(" - ")
 	}
 	else
 		return "N/A";
