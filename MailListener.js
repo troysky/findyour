@@ -6,6 +6,7 @@ exports.start = function(eventEmitter){
 
   mailListener.start(); // start listening
 
+
   // stop listening
   //mailListener.stop();
 
