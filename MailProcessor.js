@@ -181,7 +181,8 @@ exports.extractDetails = function(html){
 				license: license,
 				insurance: insurance,
 				awards: awards,
-				establishedSince: establishedSince
+				establishedSince: establishedSince,
+				postCodesToCover: []
 
 			}
 			deferred.resolve(details);
