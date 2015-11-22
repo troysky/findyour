@@ -147,6 +147,7 @@ exports.extractDetails = function(html){
 			var insurance = self.insuranceParser(window,"Do you have Insurance?","Please select which Insurances you are covered with");
 			var license = self.licenseParser(window,"Are you Licensed?","Please provide your License number and send a copy to the findyour team");
 			var awards = self.tableParser(window,"Awards you have received");
+			var establishedSince = self.tableParser(window,"Established Since?");
 			var details = {				
 				_id: email,
 				companyName: companyName,
@@ -179,7 +180,8 @@ exports.extractDetails = function(html){
 				inclusions: inclusions,
 				license: license,
 				insurance: insurance,
-				awards: awards
+				awards: awards,
+				establishedSince: establishedSince
 
 			}
 			deferred.resolve(details);
