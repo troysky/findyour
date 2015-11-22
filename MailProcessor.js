@@ -182,7 +182,16 @@ exports.extractDetails = function(html){
 				insurance: insurance,
 				awards: awards,
 				establishedSince: establishedSince,
-				postCodesToCover: []
+				postCodesToCover: [],
+				rating: "",
+				customerRating: "",
+				customerRatingCounter: "",
+				customerStars: "",
+				memberSince: "",
+				noCustomers: "",
+				pastWork: "",
+				feedback: "",
+				google: ""
 
 			}
 			deferred.resolve(details);
